@@ -10,7 +10,6 @@ from latexify import analyzers, exceptions, test_utils
 
 
 @test_utils.require_at_least(8)
-@pytest.mark.parametrize(
     "code,start,stop,step,start_int,stop_int,step_int",
     [
         (
@@ -51,7 +50,6 @@ from latexify import analyzers, exceptions, test_utils
         ),
         (
             "range(x, 123)",
-            ast.Name(id="x", ctx=ast.Load()),
             ast.Constant(value=123),
             ast.Constant(value=1),
             None,
@@ -99,7 +97,6 @@ from latexify import analyzers, exceptions, test_utils
 def test_analyze_range(
     code: str,
     start: ast.expr,
-    stop: ast.expr,
     step: ast.expr,
     start_int: int | None,
     stop_int: int | None,
@@ -133,7 +130,6 @@ def test_analyze_range(
     [
         # Not a direct call
         "__builtins__.range(x)",
-        'getattr(__builtins__, "range")(x)',
         # Unsupported functions
         "f(x)",
         "iter(range(x))",
